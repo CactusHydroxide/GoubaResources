@@ -1,6 +1,6 @@
-import { Button, Group, ThemeIcon, Text, useMantineTheme } from "@mantine/core"
+import { Button, Group, ThemeIcon, Text } from "@mantine/core"
 import { FC, ReactNode } from "react"
-import { useLocation, useNavigate, useNavigation } from "react-router-dom"
+import { useLocation, useNavigate } from "react-router-dom"
 
 export interface NavButtonProps {
     label: string,
@@ -23,7 +23,7 @@ const NavButton: FC<NavButtonProps> = ({ label, targetUrl, icon }) => {
                     marginBottom: '5px',
                     color: theme.colors.dark[0],
                     '&:hover': {
-                        backgroundColor:  isActive ? theme.colors.dark[4] : theme.colors.dark[6]
+                        backgroundColor: isActive ? theme.colors.dark[4] : theme.colors.dark[6]
                     }
                 },
                 label: {

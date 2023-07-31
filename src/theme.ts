@@ -17,7 +17,6 @@ const goubaTheme: MantineThemeColorsOverride = {
         ]
     },
     fontFamily: 'Barlow, sans-serif',
-    
 }
 
 export default goubaTheme

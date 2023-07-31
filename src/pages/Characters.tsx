@@ -1,9 +1,9 @@
-import { Grid } from "@mantine/core";
+import { Group, SimpleGrid, Title } from "@mantine/core";
 import { CharacterOverview } from "../definition";
-import PageHeader from "../components/PageHeader";
 import CharacterCard from "../components/CharacterCard";
 
-//! To be called from API
+
+//! To be called from API && suspend main body
 const characterList: CharacterOverview[] = [
     {
         name: 'Trailblazer',
@@ -48,18 +48,23 @@ const characterList: CharacterOverview[] = [
 ]
 
 const Characters = () => {
+
     return (
         <>
-            <PageHeader header='Characters' />
-            <Grid justify="space-around">
+            <Group h={75}>
+                <Title>Characters</Title>
+            </Group>
+            <SimpleGrid cols={3} breakpoints={[
+                { minWidth: 'xs', cols: 4 },
+                { minWidth: 'md', cols: 5 },
+                { minWidth: 'lg', cols: 6 }
+            ]}>
                 {characterList.map((character) => {
                     return (
-                        <Grid.Col lg={2} md={3} sm={6} maw={{ base: '30%', sm: '23%', md: '19%', lg: '210px' }} >
-                            <CharacterCard character={character} />
-                        </Grid.Col>
+                        <CharacterCard character={character} />
                     )
                 })}
-            </Grid>
+            </SimpleGrid>
         </>
     )
 }

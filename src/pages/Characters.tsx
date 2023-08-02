@@ -1,10 +1,11 @@
-import { Box, Group, Input, MultiSelect, SimpleGrid, TextInput, Title, UnstyledButton, useMantineTheme, Image } from "@mantine/core";
+import { Accordion, ActionIcon, Box, Button, Collapse, Group, Input, MultiSelect, SimpleGrid, TextInput, Title, UnstyledButton, useMantineTheme } from "@mantine/core";
 import { CharacterOverview, HSR_DmgType, HSR_Paths } from "../definition";
 import CharacterCard from "../components/CharacterCard";
 import PathTypeImage from "../components/PathTypeImage";
 import { SetStateAction, useEffect, useState } from "react";
-import { IconSearch } from '@tabler/icons-react';
+import { IconFilter, IconSearch } from '@tabler/icons-react';
 import DevOnly_Breakpoint from "../components/DevOnly_Breakpoint";
+import { useDisclosure, useMediaQuery } from "@mantine/hooks";
 
 //! To be called from API && suspend main body
 const apiCharacterData: CharacterOverview[] = [
@@ -35,7 +36,7 @@ const apiCharacterData: CharacterOverview[] = [
         rarity: 'five'
     },
     {
-        name: 'Himiko',
+        name: 'Himeko',
         dmgType: 'Fire',
         path: "Erudition",
         rarity: 'five',
@@ -52,6 +53,7 @@ const apiCharacterData: CharacterOverview[] = [
 
 const Characters = () => {
     const theme = useMantineTheme();
+    const [opened, { toggle }] = useDisclosure(false);
     const [dmgTypeFilter, setDmgTypeFilter] = useState<(HSR_DmgType)[]>([])
     const [pathFilter, setPathFilter] = useState<(HSR_Paths)[]>([])
     const [searchStr, setSearchStr] = useState<string>('')
@@ -91,64 +93,79 @@ const Characters = () => {
 
         return filteredCharacterList
     }
-
+    console.log(theme.colors.dark[0])
     return (
         <>
             <Title>Characters</Title>
-            < DevOnly_Breakpoint />
-            <Group h={75} spacing='sm' noWrap>
-                <TextInput
-                    icon={<IconSearch />}
-                    placeholder="Character"
-                    radius="xl"
-                    size='md'
-                    value={searchStr}
-                    onChange={(event) => setSearchStr(event.currentTarget.value)}
-                />
-                <Group spacing={'xs'}
-                    sx={{
-                        border: `1px solid`,
-                        borderRadius: '50px',
-                        borderColor: theme.colors.dark[4],
-                        paddingLeft: '10px',
-                        paddingRight: '10px',
-                        height: '42px'
-                    }}
-                >
-                    {allDmgType.map((filterDmgType) =>
-                        <UnstyledButton
-                            key={`filter_${filterDmgType}`}
-                            sx={{ opacity: filterActive(filterDmgType, dmgTypeFilter) ? 1 : 0.3, width: '30px', height: '30px' }}
-                            onClick={() => {
-                                filterActive(filterDmgType, dmgTypeFilter) ? removeFromFilter(filterDmgType, setDmgTypeFilter) : addToFilter(filterDmgType, setDmgTypeFilter)
-                            }} >
-                            <PathTypeImage icon={filterDmgType} />
-                        </UnstyledButton>
-                    )}
-                </Group>
-                <Group spacing={'xs'}
-                    sx={{
-                        border: `1px solid`,
-                        borderRadius: '50px',
-                        borderColor: theme.colors.dark[4],
-                        paddingLeft: '10px',
-                        paddingRight: '10px',
-                        height: '42px'
-                    }}
-                >
-                    {allPaths.map((filterPathType) =>
-                        <UnstyledButton
-                            key={`filter_${filterPathType}`}
-                            sx={{ opacity: filterActive(filterPathType, pathFilter) ? 1 : 0.3, width: '30px', height: '30px' }}
-                            onClick={() => {
-                                filterActive(filterPathType, pathFilter) ? removeFromFilter(filterPathType, setPathFilter) : addToFilter(filterPathType, setPathFilter)
-                            }}
-                        >
-                            <PathTypeImage icon={filterPathType} />
-                        </UnstyledButton>
-                    )}
-                </Group>
-            </Group >
+            <Button onClick={toggle} rightIcon={<IconFilter />} variant="default" radius='xl' h={42} mt='sm' mb='sm'>Filter </Button >
+            <Collapse in={opened}>
+                <Group spacing='sm' mb='sm'>
+                    <Group spacing={'xs'}
+                        miw={300}
+                        noWrap
+                        sx={{
+                            border: `1px solid`,
+                            borderRadius: '50px',
+                            borderColor: theme.colors.dark[4],
+                            paddingLeft: '10px',
+                            paddingRight: '10px',
+                            height: '42px'
+                        }}
+                    >
+                        {allDmgType.map((filterDmgType) =>
+                            <UnstyledButton
+                                key={`filter_${filterDmgType}`}
+                                sx={{
+                                    opacity: filterActive(filterDmgType, dmgTypeFilter) ? 1 : 0.3,
+                                    width: '30px',
+                                    height: '30px',
+                                }}
+                                onClick={() => {
+                                    filterActive(filterDmgType, dmgTypeFilter) ? removeFromFilter(filterDmgType, setDmgTypeFilter) : addToFilter(filterDmgType, setDmgTypeFilter)
+                                }} >
+                                <PathTypeImage icon={filterDmgType} />
+                            </UnstyledButton>
+                        )}
+                    </Group>
+                    <Group spacing={'xs'}
+                        miw={300}
+                        noWrap
+                        sx={{
+                            border: `1px solid`,
+                            borderRadius: '50px',
+                            borderColor: theme.colors.dark[4],
+                            paddingLeft: '10px',
+                            paddingRight: '10px',
+                            height: '42px'
+                        }}
+                    >
+                        {allPaths.map((filterPathType) =>
+                            <UnstyledButton
+                                key={`filter_${filterPathType}`}
+                                sx={{
+                                    opacity: filterActive(filterPathType, pathFilter) ? 1 : 0.3,
+                                    width: '30px',
+                                    height: '30px',
+                                }}
+                                onClick={() => {
+                                    filterActive(filterPathType, pathFilter) ? removeFromFilter(filterPathType, setPathFilter) : addToFilter(filterPathType, setPathFilter)
+                                }}
+                            >
+                                <PathTypeImage icon={filterPathType} />
+                            </UnstyledButton>
+                        )}
+                    </Group>
+                    <TextInput
+                        icon={<IconSearch />}
+                        placeholder="Character"
+                        radius="xl"
+                        size='md'
+                        value={searchStr}
+                        miw={150}
+                        onChange={(event) => setSearchStr(event.currentTarget.value)}
+                    />
+                </Group >
+            </Collapse>
             <SimpleGrid cols={3} breakpoints={[
                 { minWidth: 'xs', cols: 4 },
                 { minWidth: 'md', cols: 5 },

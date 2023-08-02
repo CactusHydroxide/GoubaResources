@@ -59,14 +59,6 @@ const PathTypeImage: FC<PathTypeImageProps> = ({ icon, imageProps }) => {
         }
     }
 
-    // return (<Avatar
-    //     size={size}
-    //     radius={radius}
-    //     style={style}
-    //     src={srcObj()}
-    //     bg={!!bg ? bg : 'transparent'}
-    //     onClick={onClick}
-    // />)
     return <Image src={srcObj()} {...imageProps} />
 }
 

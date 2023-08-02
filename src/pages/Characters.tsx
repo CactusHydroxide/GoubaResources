@@ -1,9 +1,10 @@
-import { Box, Group, Input, MultiSelect, SimpleGrid, TextInput, Title, UnstyledButton, useMantineTheme } from "@mantine/core";
+import { Box, Group, Input, MultiSelect, SimpleGrid, TextInput, Title, UnstyledButton, useMantineTheme, Image } from "@mantine/core";
 import { CharacterOverview, HSR_DmgType, HSR_Paths } from "../definition";
 import CharacterCard from "../components/CharacterCard";
 import PathElementIcon from "../components/PathElementIcon";
 import { SetStateAction, useEffect, useState } from "react";
 import { IconSearch } from '@tabler/icons-react';
+import DevOnly_Breakpoint from "../components/DevOnly_Breakpoint";
 
 //! To be called from API && suspend main body
 const apiCharacterData: CharacterOverview[] = [
@@ -94,7 +95,8 @@ const Characters = () => {
     return (
         <>
             <Title>Characters</Title>
-            <Group h={75} spacing='sm'>
+            < DevOnly_Breakpoint />
+            <Group h={75} spacing='sm' noWrap>
                 <TextInput
                     icon={<IconSearch />}
                     placeholder="Character"
@@ -103,7 +105,6 @@ const Characters = () => {
                     value={searchStr}
                     onChange={(event) => setSearchStr(event.currentTarget.value)}
                 />
-                {/* //TODO：Make the filters into components */}
                 <Group spacing={'xs'}
                     sx={{
                         border: `1px solid`,
@@ -117,11 +118,11 @@ const Characters = () => {
                     {allDmgType.map((filterDmgType) =>
                         <UnstyledButton
                             key={`filter_${filterDmgType}`}
-                            sx={{ opacity: filterActive(filterDmgType, dmgTypeFilter) ? 1 : 0.3 }}
+                            sx={{ opacity: filterActive(filterDmgType, dmgTypeFilter) ? 1 : 0.3, width: '30px', height: '30px' }}
                             onClick={() => {
                                 filterActive(filterDmgType, dmgTypeFilter) ? removeFromFilter(filterDmgType, setDmgTypeFilter) : addToFilter(filterDmgType, setDmgTypeFilter)
                             }} >
-                            <PathElementIcon size={30} radius={'xl'} icon={filterDmgType} />
+                            <PathElementIcon icon={filterDmgType} />
                         </UnstyledButton>
                     )}
                 </Group>
@@ -138,11 +139,12 @@ const Characters = () => {
                     {allPaths.map((filterPathType) =>
                         <UnstyledButton
                             key={`filter_${filterPathType}`}
-                            sx={{ opacity: filterActive(filterPathType, pathFilter) ? 1 : 0.3 }}
+                            sx={{ opacity: filterActive(filterPathType, pathFilter) ? 1 : 0.3, width: '30px', height: '30px' }}
                             onClick={() => {
                                 filterActive(filterPathType, pathFilter) ? removeFromFilter(filterPathType, setPathFilter) : addToFilter(filterPathType, setPathFilter)
-                            }} >
-                            <PathElementIcon size={30} radius={'xl'} icon={filterPathType} />
+                            }}
+                        >
+                            <PathElementIcon icon={filterPathType} />
                         </UnstyledButton>
                     )}
                 </Group>

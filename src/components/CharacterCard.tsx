@@ -41,9 +41,12 @@ const CharacterCard: FC<CharacterCardProps> = ({ character }) => {
                         }
                     />
                 </AspectRatio>
-
-                <PathElementIcon size={isSmall ? '30px' : '24px'} radius={'xl'} icon={path} style={{ position: 'absolute', right: '10px', bottom: '5px' }} bg={'#262626'} />
-                <PathElementIcon size={isSmall ? '30px' : '24px'} radius={'xl'} icon={dmgType} style={{ position: 'absolute', right: `calc(20px + ${isSmall ? '30px' : '24px'})`, bottom: '5px', padding: '2px' }} bg={'#262626'} />
+                <Box sx={{ position: 'absolute', right: '10px', bottom: '5px', width: isSmall ? '30px' : '24px', height: isSmall ? '30px' : '24px', borderRadius: '50%', padding: '2px' }} bg={'#262626'}>
+                    <PathElementIcon icon={path} />
+                </Box>
+                <Box style={{ position: 'absolute', right: `calc(20px + ${isSmall ? '30px' : '24px'})`, bottom: '5px', width: isSmall ? '30px' : '24px', height: isSmall ? '30px' : '24px', borderRadius: '50%', padding: '3px' }} bg={'#262626'}>
+                    <PathElementIcon icon={dmgType} />
+                </Box>
             </Box>
             <Text ta='center' weight={600} fz='lg' sx={{ margin: '8px' }}>{name}</Text>
         </Card >

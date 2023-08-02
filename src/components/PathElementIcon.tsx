@@ -1,4 +1,4 @@
-import { Avatar, MantineNumberSize } from "@mantine/core"
+import { Avatar, MantineNumberSize, Image, ImageProps } from "@mantine/core"
 import { HSR_DmgType, HSR_Paths } from "../definition"
 import { FC, MouseEventHandler } from "react"
 
@@ -18,16 +18,12 @@ import dmgType_Quantum from '../Assets/TypeIcons/Quantum.webp'
 import dmgType_Wind from '../Assets/TypeIcons/Wind.webp'
 
 interface PathElementIconProps {
-    size: MantineNumberSize
-    radius: MantineNumberSize
     icon: HSR_DmgType | HSR_Paths
-    style?: React.CSSProperties
-    bg?: string
-    onClick?: MouseEventHandler
+    imageProps?: ImageProps & React.RefAttributes<HTMLDivElement>
 }
 
 
-const PathElementIcon: FC<PathElementIconProps> = ({ size, radius, icon, bg, style, onClick }) => {
+const PathElementIcon: FC<PathElementIconProps> = ({ icon, imageProps }) => {
     const srcObj = () => {
         switch (icon) {
             case 'Destruction':
@@ -63,14 +59,15 @@ const PathElementIcon: FC<PathElementIconProps> = ({ size, radius, icon, bg, sty
         }
     }
 
-    return (<Avatar
-        size={size}
-        radius={radius}
-        style={style}
-        src={srcObj()}
-        bg={!!bg ? bg : 'transparent'}
-        onClick={onClick}
-    />)
+    // return (<Avatar
+    //     size={size}
+    //     radius={radius}
+    //     style={style}
+    //     src={srcObj()}
+    //     bg={!!bg ? bg : 'transparent'}
+    //     onClick={onClick}
+    // />)
+    return <Image src={srcObj()} {...imageProps} />
 }
 
 export default PathElementIcon

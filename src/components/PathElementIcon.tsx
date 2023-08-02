@@ -1,6 +1,6 @@
 import { Avatar, MantineNumberSize } from "@mantine/core"
 import { HSR_DmgType, HSR_Paths } from "../definition"
-import { FC } from "react"
+import { FC, MouseEventHandler } from "react"
 
 import path_Destruction from '../Assets/PathIcons/Destruction.webp'
 import path_Hunt from '../Assets/PathIcons/Hunt.webp'
@@ -21,12 +21,13 @@ interface PathElementIconProps {
     size: MantineNumberSize
     radius: MantineNumberSize
     icon: HSR_DmgType | HSR_Paths
-    style: React.CSSProperties
+    style?: React.CSSProperties
     bg?: string
+    onClick?: MouseEventHandler
 }
 
 
-const PathElementIcon: FC<PathElementIconProps> = ({ size, radius, icon, bg, style }) => {
+const PathElementIcon: FC<PathElementIconProps> = ({ size, radius, icon, bg, style, onClick }) => {
     const srcObj = () => {
         switch (icon) {
             case 'Destruction':
@@ -68,6 +69,7 @@ const PathElementIcon: FC<PathElementIconProps> = ({ size, radius, icon, bg, sty
         style={style}
         src={srcObj()}
         bg={!!bg ? bg : 'transparent'}
+        onClick={onClick}
     />)
 }
 

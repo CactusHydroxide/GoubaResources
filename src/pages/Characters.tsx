@@ -99,8 +99,8 @@ const Characters = () => {
                     )
                 })}
             </SimpleGrid>
-        </>`
+        </>
     )
-}`
+}
 
 export default Characters

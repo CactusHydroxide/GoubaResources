@@ -3,7 +3,7 @@ import { CharacterOverview } from "../definition";
 import { FC } from "react";
 import { rarityGradients } from "../utils/RarityGradient";
 import { useNavigate } from "react-router-dom";
-import PathElementIcon from "./PathElementIcon";
+import PathTypeImage from "./PathTypeImage";
 import { useMediaQuery } from "@mantine/hooks";
 
 interface CharacterCardProps {
@@ -42,10 +42,10 @@ const CharacterCard: FC<CharacterCardProps> = ({ character }) => {
                     />
                 </AspectRatio>
                 <Box sx={{ position: 'absolute', right: '10px', bottom: '5px', width: isSmall ? '30px' : '24px', height: isSmall ? '30px' : '24px', borderRadius: '50%', padding: '2px' }} bg={'#262626'}>
-                    <PathElementIcon icon={path} />
+                    <PathTypeImage icon={path} />
                 </Box>
                 <Box style={{ position: 'absolute', right: `calc(20px + ${isSmall ? '30px' : '24px'})`, bottom: '5px', width: isSmall ? '30px' : '24px', height: isSmall ? '30px' : '24px', borderRadius: '50%', padding: '3px' }} bg={'#262626'}>
-                    <PathElementIcon icon={dmgType} />
+                    <PathTypeImage icon={dmgType} />
                 </Box>
             </Box>
             <Text ta='center' weight={600} fz='lg' sx={{ margin: '8px' }}>{name}</Text>

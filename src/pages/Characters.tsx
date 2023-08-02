@@ -1,7 +1,7 @@
 import { Box, Group, Input, MultiSelect, SimpleGrid, TextInput, Title, UnstyledButton, useMantineTheme, Image } from "@mantine/core";
 import { CharacterOverview, HSR_DmgType, HSR_Paths } from "../definition";
 import CharacterCard from "../components/CharacterCard";
-import PathElementIcon from "../components/PathElementIcon";
+import PathTypeImage from "../components/PathTypeImage";
 import { SetStateAction, useEffect, useState } from "react";
 import { IconSearch } from '@tabler/icons-react';
 import DevOnly_Breakpoint from "../components/DevOnly_Breakpoint";
@@ -122,7 +122,7 @@ const Characters = () => {
                             onClick={() => {
                                 filterActive(filterDmgType, dmgTypeFilter) ? removeFromFilter(filterDmgType, setDmgTypeFilter) : addToFilter(filterDmgType, setDmgTypeFilter)
                             }} >
-                            <PathElementIcon icon={filterDmgType} />
+                            <PathTypeImage icon={filterDmgType} />
                         </UnstyledButton>
                     )}
                 </Group>
@@ -144,7 +144,7 @@ const Characters = () => {
                                 filterActive(filterPathType, pathFilter) ? removeFromFilter(filterPathType, setPathFilter) : addToFilter(filterPathType, setPathFilter)
                             }}
                         >
-                            <PathElementIcon icon={filterPathType} />
+                            <PathTypeImage icon={filterPathType} />
                         </UnstyledButton>
                     )}
                 </Group>

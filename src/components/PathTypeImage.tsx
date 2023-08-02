@@ -17,13 +17,13 @@ import dmgType_Imaginary from '../Assets/TypeIcons/Imaginary.webp'
 import dmgType_Quantum from '../Assets/TypeIcons/Quantum.webp'
 import dmgType_Wind from '../Assets/TypeIcons/Wind.webp'
 
-interface PathElementIconProps {
+interface PathTypeImageProps {
     icon: HSR_DmgType | HSR_Paths
     imageProps?: ImageProps & React.RefAttributes<HTMLDivElement>
 }
 
 
-const PathElementIcon: FC<PathElementIconProps> = ({ icon, imageProps }) => {
+const PathTypeImage: FC<PathTypeImageProps> = ({ icon, imageProps }) => {
     const srcObj = () => {
         switch (icon) {
             case 'Destruction':
@@ -70,4 +70,4 @@ const PathElementIcon: FC<PathElementIconProps> = ({ icon, imageProps }) => {
     return <Image src={srcObj()} {...imageProps} />
 }
 
-export default PathElementIcon
+export default PathTypeImage

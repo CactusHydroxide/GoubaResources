@@ -1,6 +1,6 @@
-import { Avatar, MantineNumberSize, Image, ImageProps } from "@mantine/core"
+import { Image, ImageProps } from "@mantine/core"
 import { HSR_DmgType, HSR_Paths } from "../definition"
-import { FC, MouseEventHandler } from "react"
+import { FC } from "react"
 
 import path_Destruction from '../Assets/PathIcons/Destruction.webp'
 import path_Hunt from '../Assets/PathIcons/Hunt.webp'

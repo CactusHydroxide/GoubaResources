@@ -46,6 +46,8 @@ const SearchPathTypeFilter: FC<SearchPathTypeFilterProps> = ({ search, filterDmg
         return filterArr.includes(toCheck)
     }
 
+    ~
+
     return (
         <>
             <Button
@@ -133,7 +135,7 @@ const SearchPathTypeFilter: FC<SearchPathTypeFilterProps> = ({ search, filterDmg
                     </Group>}
                     {!!search && <TextInput
                         icon={<IconSearch />}
-                        placeholder="Character"
+                        placeholder="Search"
                         radius="xl"
                         size='md'
                         value={search.searchStr}

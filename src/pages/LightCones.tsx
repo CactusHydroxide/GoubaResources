@@ -3,7 +3,6 @@ import SearchPathTypeFilter from "../components/SearchPathTypeFilter"
 import { useState } from "react"
 import { HSR_Paths, LightConeOverview } from "../definition"
 import { useMediaQuery } from "@mantine/hooks"
-import DevOnly_Breakpoint from "../components/DevOnly_Breakpoint"
 import LightConeTableRow from "../components/LightConeTableRow"
 
 const apiLightConeData: LightConeOverview[] = [
@@ -36,7 +35,7 @@ const apiLightConeData: LightConeOverview[] = [
     {
         name: 'Coggers2',
         path: 'Harmony',
-        rarity: 'three',
+        rarity: 'four',
         imageUrl: 'https://static.wikia.nocookie.net/houkai-star-rail/images/8/89/Light_Cone_Meshing_Cogs.png',
         passive: {
             name: 'pogging it out',
@@ -60,9 +59,9 @@ const apiLightConeData: LightConeOverview[] = [
         }
     },
     {
-        name: 'Coggers',
-        path: 'Harmony',
-        rarity: 'three',
+        name: 'Peserve Kog',
+        path: 'Preservation',
+        rarity: 'five',
         imageUrl: 'https://static.wikia.nocookie.net/houkai-star-rail/images/8/89/Light_Cone_Meshing_Cogs.png',
         passive: {
             name: 'pogging it out',
@@ -99,13 +98,22 @@ const LightCones = () => {
     const filterLightCones: (arrToFilter: LightConeOverview[]) => LightConeOverview[] = (arrToFilter) => {
         let filteredLightConeArr = arrToFilter
 
+        if (pathsArr.length > 0) {
+            filteredLightConeArr = filteredLightConeArr.filter((lightCone) => pathsArr.includes(lightCone.path))
+        }
+        if (searchStr.length > 0) {
+            filteredLightConeArr = filteredLightConeArr.filter((lightCone) => (lightCone.name.toLocaleLowerCase().search(searchStr.toLowerCase())) != -1)
+        }
+
+
         return filteredLightConeArr
     }
+
+
 
     return (
         <>
             <Title>Light Cones</Title>
-            <DevOnly_Breakpoint />
             <SearchPathTypeFilter filterPaths={{ pathsArr, setPathsArr }} search={{ searchStr, setSearchStr }} />
             <Table fontSize={maxMedium ? 'sm' : 'md'} highlightOnHover>
                 <thead>

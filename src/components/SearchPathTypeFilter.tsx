@@ -2,25 +2,27 @@ import { Button, Collapse, Group, TextInput, UnstyledButton, useMantineTheme } f
 import PathTypeImage from "./PathTypeImage"
 import { HSR_DmgType, HSR_Paths } from "../definition"
 import { useDisclosure } from "@mantine/hooks"
-import { IconFilter, IconSearch } from "@tabler/icons-react"
+import { IconChevronDown, IconSearch } from "@tabler/icons-react"
 import { FC, Dispatch, SetStateAction } from "react"
 
 interface SearchPathTypeFilterProps {
     search?: {
-        searchState: string,
-        setSearchState: Dispatch<SetStateAction<string>>
+        searchStr: string,
+        setSearchStr: Dispatch<SetStateAction<string>>
     },
     filterDmgType?: {
-        allDmgTypeArr: HSR_DmgType[]
-        dmgTypeArr: HSR_DmgType[],
-        setDmgTypeArr: Dispatch<SetStateAction<HSR_DmgType[]>>
+        dmgTypesArr: HSR_DmgType[],
+        setDmgTypesArr: Dispatch<SetStateAction<HSR_DmgType[]>>
     },
     filterPaths?: {
-        allPathsArr: HSR_Paths[]
         pathsArr: HSR_Paths[],
         setPathsArr: Dispatch<SetStateAction<HSR_Paths[]>>
     }
 }
+
+export const allDmgTypeArr: HSR_DmgType[] = ['Physical', 'Fire', 'Ice', 'Lightning', 'Wind', 'Quantum', 'Imaginary',]
+export const allPathsArr: HSR_Paths[] = ['Destruction', 'Hunt', 'Erudition', 'Harmony', 'Nihility', 'Preservation', 'Abundance']
+
 
 const SearchPathTypeFilter: FC<SearchPathTypeFilterProps> = ({ search, filterDmgType, filterPaths }) => {
     const theme = useMantineTheme();
@@ -46,7 +48,18 @@ const SearchPathTypeFilter: FC<SearchPathTypeFilterProps> = ({ search, filterDmg
 
     return (
         <>
-            <Button onClick={toggle} rightIcon={<IconFilter />} variant="default" radius='xl' h={42} mt='sm' mb='sm'>Filter </Button >
+            <Button
+                onClick={toggle}
+                variant="default"
+                radius='xl'
+                h={42} mt='sm' mb='sm'
+                rightIcon={<IconChevronDown
+                    style={{
+                        rotate: opened ? '0deg' : "180deg",
+                        transition: 'rotate 200ms ease-in-out'
+                    }}
+                />}
+            >Filter</Button >
             <Collapse in={opened}>
                 <Group spacing='sm' mb='sm'>
                     {!!filterDmgType && <Group spacing={'xs'}
@@ -58,19 +71,26 @@ const SearchPathTypeFilter: FC<SearchPathTypeFilterProps> = ({ search, filterDmg
                             borderColor: theme.colors.dark[4],
                             paddingLeft: '10px',
                             paddingRight: '10px',
-                            height: '42px'
+                            height: '42px',
+                            '&:hover': {
+                                backgroundColor: theme.colors.dark[5]
+                            }
                         }}
                     >
-                        {filterDmgType.allDmgTypeArr.map((filtered) =>
+                        {allDmgTypeArr.map((filtered) =>
                             <UnstyledButton
                                 key={`filter_${filtered}`}
                                 sx={{
-                                    opacity: filterActive(filtered, filterDmgType.dmgTypeArr) ? 1 : 0.3,
+                                    opacity: filterActive(filtered, filterDmgType.dmgTypesArr) ? 1 : 0.3,
                                     width: '30px',
                                     height: '30px',
+                                    transition: 'opacity 150ms ease-out',
+                                    '&:hover': {
+                                        opacity: filterActive(filtered, filterDmgType.dmgTypesArr) ? 1 : 0.7,
+                                    }
                                 }}
                                 onClick={() => {
-                                    filterActive(filtered, filterDmgType.dmgTypeArr) ? removeFromFilter(filtered, filterDmgType.setDmgTypeArr) : addToFilter(filtered, filterDmgType.setDmgTypeArr)
+                                    filterActive(filtered, filterDmgType.dmgTypesArr) ? removeFromFilter(filtered, filterDmgType.setDmgTypesArr) : addToFilter(filtered, filterDmgType.setDmgTypesArr)
                                 }} >
                                 <PathTypeImage icon={filtered} />
                             </UnstyledButton>
@@ -85,16 +105,23 @@ const SearchPathTypeFilter: FC<SearchPathTypeFilterProps> = ({ search, filterDmg
                             borderColor: theme.colors.dark[4],
                             paddingLeft: '10px',
                             paddingRight: '10px',
-                            height: '42px'
+                            height: '42px',
+                            '&:hover': {
+                                backgroundColor: theme.colors.dark[5]
+                            }
                         }}
                     >
-                        {filterPaths.allPathsArr.map((filtered) =>
+                        {allPathsArr.map((filtered) =>
                             <UnstyledButton
                                 key={`filter_${filtered}`}
                                 sx={{
                                     opacity: filterActive(filtered, filterPaths.pathsArr) ? 1 : 0.3,
                                     width: '30px',
                                     height: '30px',
+                                    transition: 'opacity 150ms ease-out',
+                                    '&:hover': {
+                                        opacity: filterActive(filtered, filterPaths.pathsArr) ? 1 : 0.7,
+                                    }
                                 }}
                                 onClick={() => {
                                     filterActive(filtered, filterPaths.pathsArr) ? removeFromFilter(filtered, filterPaths.setPathsArr) : addToFilter(filtered, filterPaths.setPathsArr)
@@ -109,9 +136,16 @@ const SearchPathTypeFilter: FC<SearchPathTypeFilterProps> = ({ search, filterDmg
                         placeholder="Character"
                         radius="xl"
                         size='md'
-                        value={search.searchState}
+                        value={search.searchStr}
                         miw={150}
-                        onChange={(event) => search.setSearchState(event.currentTarget.value)}
+                        sx={{
+                            '.mantine-TextInput-input': {
+                                '&:hover': {
+                                    backgroundColor: theme.colors.dark[5]
+                                }
+                            }
+                        }}
+                        onChange={(event) => search.setSearchStr(event.currentTarget.value)}
                     />}
                 </Group >
             </Collapse>

@@ -1,7 +1,7 @@
 import { Table, Title, useMantineTheme } from "@mantine/core"
 import SearchPathTypeFilter from "../components/SearchPathTypeFilter"
 import { useState } from "react"
-import { HSR_Paths, LightConeOverview } from "../definition"
+import { HSR_Paths, HSR_Rarity, LightConeOverview } from "../definition"
 import { useMediaQuery } from "@mantine/hooks"
 import LightConeTableRow from "../components/LightConeTableRow"
 
@@ -92,6 +92,7 @@ const LightCones = () => {
     const minExtraSmall = useMediaQuery(`(min-width: ${theme.breakpoints.xs})`)
 
     const [pathsArr, setPathsArr] = useState<(HSR_Paths)[]>([])
+    const [rarityArr, setRarityArr] = useState<HSR_Rarity[]>([])
     const [searchStr, setSearchStr] = useState<string>('')
 
 
@@ -100,6 +101,9 @@ const LightCones = () => {
 
         if (pathsArr.length > 0) {
             filteredLightConeArr = filteredLightConeArr.filter((lightCone) => pathsArr.includes(lightCone.path))
+        }
+        if (rarityArr.length > 0) {
+            filteredLightConeArr = filteredLightConeArr.filter((lightCone) => rarityArr.includes(lightCone.rarity))
         }
         if (searchStr.length > 0) {
             filteredLightConeArr = filteredLightConeArr.filter((lightCone) => (lightCone.name.toLocaleLowerCase().search(searchStr.toLowerCase())) != -1)
@@ -114,7 +118,7 @@ const LightCones = () => {
     return (
         <>
             <Title>Light Cones</Title>
-            <SearchPathTypeFilter filterPaths={{ pathsArr, setPathsArr }} search={{ searchStr, setSearchStr }} />
+            <SearchPathTypeFilter filterPaths={{ pathsArr, setPathsArr }} search={{ searchStr, setSearchStr }} filterRarity={{ rarityArr, setRarityArr, excluding: ['two'] }} />
             <Table fontSize={maxMedium ? 'sm' : 'md'} highlightOnHover>
                 <thead>
                     <tr>

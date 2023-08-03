@@ -1,9 +1,10 @@
-import { Button, Collapse, Group, TextInput, UnstyledButton, useMantineTheme } from "@mantine/core"
+import { Badge, Button, Collapse, ColorSwatch, Group, TextInput, UnstyledButton, useMantineTheme } from "@mantine/core"
 import PathTypeImage from "./PathTypeImage"
-import { HSR_DmgType, HSR_Paths } from "../definition"
+import { HSR_DmgType, HSR_Paths, HSR_Rarity } from "../definition"
 import { useDisclosure } from "@mantine/hooks"
 import { IconChevronDown, IconSearch } from "@tabler/icons-react"
 import { FC, Dispatch, SetStateAction } from "react"
+import { rarityGradients } from "../utils/RarityGradient"
 
 interface SearchPathTypeFilterProps {
     search?: {
@@ -17,14 +18,20 @@ interface SearchPathTypeFilterProps {
     filterPaths?: {
         pathsArr: HSR_Paths[],
         setPathsArr: Dispatch<SetStateAction<HSR_Paths[]>>
+    },
+    filterRarity?: {
+        rarityArr: HSR_Rarity[],
+        setRarityArr: Dispatch<SetStateAction<HSR_Rarity[]>>,
+        excluding?: HSR_Rarity[]
     }
 }
 
 export const allDmgTypeArr: HSR_DmgType[] = ['Physical', 'Fire', 'Ice', 'Lightning', 'Wind', 'Quantum', 'Imaginary',]
 export const allPathsArr: HSR_Paths[] = ['Destruction', 'Hunt', 'Erudition', 'Harmony', 'Nihility', 'Preservation', 'Abundance']
+export const allRarityArr: HSR_Rarity[] = ['two', 'three', 'four', 'five']
 
 
-const SearchPathTypeFilter: FC<SearchPathTypeFilterProps> = ({ search, filterDmgType, filterPaths }) => {
+const SearchPathTypeFilter: FC<SearchPathTypeFilterProps> = ({ search, filterDmgType, filterPaths, filterRarity }) => {
     const theme = useMantineTheme();
     const [opened, { toggle }] = useDisclosure(false);
 
@@ -46,7 +53,7 @@ const SearchPathTypeFilter: FC<SearchPathTypeFilterProps> = ({ search, filterDmg
         return filterArr.includes(toCheck)
     }
 
-    
+
 
     return (
         <>
@@ -130,6 +137,41 @@ const SearchPathTypeFilter: FC<SearchPathTypeFilterProps> = ({ search, filterDmg
                                 }}
                             >
                                 <PathTypeImage icon={filtered} />
+                            </UnstyledButton>
+                        )}
+                    </Group>}
+                    {!!filterRarity && <Group spacing={'xs'}
+                        // miw={300}
+                        noWrap
+                        sx={{
+                            border: `1px solid`,
+                            borderRadius: '50px',
+                            borderColor: theme.colors.dark[4],
+                            paddingLeft: '10px',
+                            paddingRight: '10px',
+                            height: '42px',
+                            '&:hover': {
+                                backgroundColor: theme.colors.dark[5]
+                            }
+                        }}
+                    >
+                        {allRarityArr.map((filtered) =>
+                            (!filterRarity.excluding?.includes(filtered)) && <UnstyledButton
+                                key={`filter_${filtered}`}
+                                sx={{
+                                    opacity: filterActive(filtered, filterRarity.rarityArr) ? 1 : 0.3,
+                                    width: '75px',
+                                    height: '30px',
+                                    transition: 'opacity 150ms ease-out',
+                                    '&:hover': {
+                                        opacity: filterActive(filtered, filterRarity.rarityArr) ? 1 : 0.7,
+                                    }
+                                }}
+                                onClick={() => {
+                                    filterActive(filtered, filterRarity.rarityArr) ? removeFromFilter(filtered, filterRarity.setRarityArr) : addToFilter(filtered, filterRarity.setRarityArr)
+                                }}
+                            >
+                                <Badge w='100%' bg={theme.fn.gradient(rarityGradients[filtered])} >{filtered} ⭐</Badge>
                             </UnstyledButton>
                         )}
                     </Group>}

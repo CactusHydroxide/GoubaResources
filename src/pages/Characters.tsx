@@ -1,5 +1,5 @@
 import { SimpleGrid, Title } from "@mantine/core";
-import { CharacterOverview, HSR_DmgType, HSR_Paths } from "../definition";
+import { CharacterOverview, HSR_DmgType, HSR_Paths, HSR_Rarity } from "../definition";
 import CharacterCard from "../components/CharacterCard";
 import { useState } from "react";
 import SearchPathTypeFilter from "../components/SearchPathTypeFilter";
@@ -51,6 +51,7 @@ const apiCharacterData: CharacterOverview[] = [
 const Characters = () => {
     const [dmgTypesArr, setDmgTypesArr] = useState<(HSR_DmgType)[]>([])
     const [pathsArr, setPathsArr] = useState<(HSR_Paths)[]>([])
+    const [rarityArr, setRarityArr] = useState<(HSR_Rarity[])>([])
     const [searchStr, setSearchStr] = useState<string>('')
 
     //* Filter Array Functions
@@ -62,6 +63,9 @@ const Characters = () => {
         }
         if (pathsArr.length > 0) {
             filteredCharacterList = filteredCharacterList.filter((character) => pathsArr.includes(character.path))
+        }
+        if (rarityArr.length > 0) {
+            filteredCharacterList = filteredCharacterList.filter((character) => rarityArr.includes(character.rarity))
         }
         if (searchStr.length > 0) {
             filteredCharacterList = filteredCharacterList.filter((character) => (character.name.toLocaleLowerCase().search(searchStr.toLowerCase())) != -1)
@@ -82,6 +86,11 @@ const Characters = () => {
                 filterPaths={{
                     pathsArr,
                     setPathsArr
+                }}
+                filterRarity={{
+                    rarityArr,
+                    setRarityArr,
+                    excluding: ['two', 'three']
                 }}
             />
             <SimpleGrid cols={3} breakpoints={[

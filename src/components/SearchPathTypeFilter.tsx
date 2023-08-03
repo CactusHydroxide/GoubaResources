@@ -1,4 +1,4 @@
-import { Badge, Button, Collapse, ColorSwatch, Group, TextInput, UnstyledButton, useMantineTheme } from "@mantine/core"
+import { Badge, Button, Collapse, Group, TextInput, UnstyledButton, useMantineTheme } from "@mantine/core"
 import PathTypeImage from "./PathTypeImage"
 import { HSR_DmgType, HSR_Paths, HSR_Rarity } from "../definition"
 import { useDisclosure } from "@mantine/hooks"

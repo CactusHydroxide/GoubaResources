@@ -46,7 +46,7 @@ const SearchPathTypeFilter: FC<SearchPathTypeFilterProps> = ({ search, filterDmg
         return filterArr.includes(toCheck)
     }
 
-    ~
+    
 
     return (
         <>

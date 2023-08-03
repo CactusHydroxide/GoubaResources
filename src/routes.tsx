@@ -5,6 +5,7 @@ import Characters from "./pages/Characters"
 import Character from "./pages/Character"
 import Wishes from "./pages/Wishes"
 import LightCones from "./pages/LightCones"
+import LightCone from "./pages/LightCone"
 
 const PageRoutes = () => {
     return (
@@ -15,7 +16,7 @@ const PageRoutes = () => {
             </Route>
             <Route path="/LightCones">
                 <Route index element={<LightCones />} />
-                {/* <Route path=":id" element={<Character />} /> */}
+                <Route path=":id" element={<LightCone />} />
             </Route>
             <Route path="/Wishes" element={<Wishes />} />
             <Route path="/" element={<Dashboard />} />

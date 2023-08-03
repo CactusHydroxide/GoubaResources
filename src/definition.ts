@@ -14,8 +14,16 @@ export interface LightConeOverview {
     name: string
     path: HSR_Paths
     rarity: HSR_Rarity
-    hp: {min: number, max :number}
-    def: {min: number, max :number}
-    atk: {min: number, max :number}
+    passive: {
+        name: string
+        description: string
+        params: {
+            min: number[],
+            max: number[]
+        }
+    }
+    hp: { min: number, max: number }
+    def: { min: number, max: number }
+    atk: { min: number, max: number }
     imageUrl?: string
 }

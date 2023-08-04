@@ -49,14 +49,15 @@ const LightConeTableRow: FC<LightConeTableRowProp> = ({ lightCone }) => {
                                 padding: '5px',
                                 border: '1px solid',
                                 borderColor: theme.colors.dark[3],
-                                borderRadius: theme.spacing.sm
+                                borderRadius: theme.spacing.sm,
+                                margin: 'auto'
                             }
                         }}
                     />
                 </Box>
             </td>
             <td><Group spacing='xs' noWrap miw={100} maw={'20vw'} align="left">
-                <PathTypeImage icon={lightCone.path} imageProps={{ height: maxMedium ? 25 : 35, width: 'auto' }} />
+                <PathTypeImage icon={lightCone.path} imageProps={{ height: maxMedium ? 25 : 35, width: 'auto', }} />
                 <Text align={maxMedium ? 'center' : "match-parent"} w="100%" sx={{ textAlign: 'left' }}>{lightCone.path}</Text>
             </Group></td>
             {

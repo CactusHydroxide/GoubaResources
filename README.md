@@ -4,7 +4,7 @@ Website containing HSR & stuff
 
 ## Setup
 ### Requirements
--  NodeJS
+- NodeJS
 - Git (or Github desktop)
 
 ### How to start development server

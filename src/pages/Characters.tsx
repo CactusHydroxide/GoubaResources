@@ -1,5 +1,5 @@
 import { SimpleGrid, Title } from "@mantine/core";
-import { CharacterOverview, HSR_DmgType, HSR_Paths } from "../definition";
+import { CharacterOverview, HSR_DmgType, HSR_Paths, HSR_Rarity } from "../definition";
 import CharacterCard from "../components/CharacterCard";
 import { useState } from "react";
 import SearchPathTypeFilter from "../components/SearchPathTypeFilter";
@@ -49,21 +49,23 @@ const apiCharacterData: CharacterOverview[] = [
 ]
 
 const Characters = () => {
-    const [dmgTypeFilter, setDmgTypeFilter] = useState<(HSR_DmgType)[]>([])
-    const [pathFilter, setPathFilter] = useState<(HSR_Paths)[]>([])
+    const [dmgTypesArr, setDmgTypesArr] = useState<(HSR_DmgType)[]>([])
+    const [pathsArr, setPathsArr] = useState<(HSR_Paths)[]>([])
+    const [rarityArr, setRarityArr] = useState<(HSR_Rarity[])>([])
     const [searchStr, setSearchStr] = useState<string>('')
-    const allDmgType: HSR_DmgType[] = ['Physical', 'Fire', 'Ice', 'Lightning', 'Wind', 'Quantum', 'Imaginary',]
-    const allPaths: HSR_Paths[] = ['Destruction', 'Hunt', 'Erudition', 'Harmony', 'Nihility', 'Preservation', 'Abundance']
 
     //* Filter Array Functions
     const filteredCharArr = (characterList: CharacterOverview[]): CharacterOverview[] => {
         let filteredCharacterList: CharacterOverview[] = characterList
 
-        if (dmgTypeFilter.length > 0) {
-            filteredCharacterList = filteredCharacterList.filter((character) => dmgTypeFilter.includes(character.dmgType))
+        if (dmgTypesArr.length > 0) {
+            filteredCharacterList = filteredCharacterList.filter((character) => dmgTypesArr.includes(character.dmgType))
         }
-        if (pathFilter.length > 0) {
-            filteredCharacterList = filteredCharacterList.filter((character) => pathFilter.includes(character.path))
+        if (pathsArr.length > 0) {
+            filteredCharacterList = filteredCharacterList.filter((character) => pathsArr.includes(character.path))
+        }
+        if (rarityArr.length > 0) {
+            filteredCharacterList = filteredCharacterList.filter((character) => rarityArr.includes(character.rarity))
         }
         if (searchStr.length > 0) {
             filteredCharacterList = filteredCharacterList.filter((character) => (character.name.toLocaleLowerCase().search(searchStr.toLowerCase())) != -1)
@@ -76,16 +78,19 @@ const Characters = () => {
         <>
             <Title>Characters</Title>
             <SearchPathTypeFilter
-                search={{ searchState: searchStr, setSearchState: setSearchStr }}
+                search={{ searchStr, setSearchStr }}
                 filterDmgType={{
-                    allDmgTypeArr: allDmgType,
-                    dmgTypeArr: dmgTypeFilter,
-                    setDmgTypeArr: setDmgTypeFilter
+                    dmgTypesArr,
+                    setDmgTypesArr
                 }}
                 filterPaths={{
-                    allPathsArr: allPaths,
-                    pathsArr: pathFilter,
-                    setPathsArr: setPathFilter
+                    pathsArr,
+                    setPathsArr
+                }}
+                filterRarity={{
+                    rarityArr,
+                    setRarityArr,
+                    excluding: ['two', 'three']
                 }}
             />
             <SimpleGrid cols={3} breakpoints={[

@@ -1,4 +1,4 @@
-import { Badge, Button, Collapse, Group, TextInput, UnstyledButton, useMantineTheme } from "@mantine/core"
+import { Badge, Button, CSSObject, Collapse, Group, TextInput, UnstyledButton, useMantineTheme } from "@mantine/core"
 import PathTypeImage from "./PathTypeImage"
 import { HSR_DmgType, HSR_Paths, HSR_Rarity } from "../definition"
 import { useDisclosure } from "@mantine/hooks"
@@ -53,10 +53,33 @@ const SearchPathTypeFilter: FC<SearchPathTypeFilterProps> = ({ search, filterDmg
         return filterArr.includes(toCheck)
     }
 
+    const filterContainerStyles: CSSObject = {
+        border: `1px solid`,
+        borderRadius: '50px',
+        borderColor: theme.colors.dark[4],
+        paddingLeft: '10px',
+        paddingRight: '10px',
+        height: '42px',
+        '&:hover': {
+            backgroundColor: theme.colors.dark[5]
+        }
+    }
 
+    const filteredObjectStyles: (filterActive: boolean) => CSSObject = (filterActive) => {
+        return ({
+            opacity: filterActive ? 1 : 0.3,
+            width: '30px',
+            height: '30px',
+            transition: 'opacity 150ms ease-out',
+            '&:hover': {
+                opacity: filterActive ? 1 : 0.7,
+            }
+        })
+    }
 
     return (
         <>
+
             <Button
                 onClick={toggle}
                 variant="default"
@@ -75,29 +98,13 @@ const SearchPathTypeFilter: FC<SearchPathTypeFilterProps> = ({ search, filterDmg
                         miw={300}
                         noWrap
                         sx={{
-                            border: `1px solid`,
-                            borderRadius: '50px',
-                            borderColor: theme.colors.dark[4],
-                            paddingLeft: '10px',
-                            paddingRight: '10px',
-                            height: '42px',
-                            '&:hover': {
-                                backgroundColor: theme.colors.dark[5]
-                            }
+                            filterContainerStyles
                         }}
                     >
                         {allDmgTypeArr.map((filtered) =>
                             <UnstyledButton
                                 key={`filter_${filtered}`}
-                                sx={{
-                                    opacity: filterActive(filtered, filterDmgType.dmgTypesArr) ? 1 : 0.3,
-                                    width: '30px',
-                                    height: '30px',
-                                    transition: 'opacity 150ms ease-out',
-                                    '&:hover': {
-                                        opacity: filterActive(filtered, filterDmgType.dmgTypesArr) ? 1 : 0.7,
-                                    }
-                                }}
+                                sx={filteredObjectStyles(filterActive(filtered, filterDmgType.dmgTypesArr))}
                                 onClick={() => {
                                     filterActive(filtered, filterDmgType.dmgTypesArr) ? removeFromFilter(filtered, filterDmgType.setDmgTypesArr) : addToFilter(filtered, filterDmgType.setDmgTypesArr)
                                 }} >
@@ -109,29 +116,13 @@ const SearchPathTypeFilter: FC<SearchPathTypeFilterProps> = ({ search, filterDmg
                         miw={300}
                         noWrap
                         sx={{
-                            border: `1px solid`,
-                            borderRadius: '50px',
-                            borderColor: theme.colors.dark[4],
-                            paddingLeft: '10px',
-                            paddingRight: '10px',
-                            height: '42px',
-                            '&:hover': {
-                                backgroundColor: theme.colors.dark[5]
-                            }
+                            filterContainerStyles
                         }}
                     >
                         {allPathsArr.map((filtered) =>
                             <UnstyledButton
                                 key={`filter_${filtered}`}
-                                sx={{
-                                    opacity: filterActive(filtered, filterPaths.pathsArr) ? 1 : 0.3,
-                                    width: '30px',
-                                    height: '30px',
-                                    transition: 'opacity 150ms ease-out',
-                                    '&:hover': {
-                                        opacity: filterActive(filtered, filterPaths.pathsArr) ? 1 : 0.7,
-                                    }
-                                }}
+                                sx={filteredObjectStyles(filterActive(filtered, filterPaths.pathsArr))}
                                 onClick={() => {
                                     filterActive(filtered, filterPaths.pathsArr) ? removeFromFilter(filtered, filterPaths.setPathsArr) : addToFilter(filtered, filterPaths.setPathsArr)
                                 }}
@@ -144,29 +135,13 @@ const SearchPathTypeFilter: FC<SearchPathTypeFilterProps> = ({ search, filterDmg
                         // miw={300}
                         noWrap
                         sx={{
-                            border: `1px solid`,
-                            borderRadius: '50px',
-                            borderColor: theme.colors.dark[4],
-                            paddingLeft: '10px',
-                            paddingRight: '10px',
-                            height: '42px',
-                            '&:hover': {
-                                backgroundColor: theme.colors.dark[5]
-                            }
+                            filterContainerStyles
                         }}
                     >
                         {allRarityArr.map((filtered) =>
                             (!filterRarity.excluding?.includes(filtered)) && <UnstyledButton
                                 key={`filter_${filtered}`}
-                                sx={{
-                                    opacity: filterActive(filtered, filterRarity.rarityArr) ? 1 : 0.3,
-                                    width: '75px',
-                                    height: '30px',
-                                    transition: 'opacity 150ms ease-out',
-                                    '&:hover': {
-                                        opacity: filterActive(filtered, filterRarity.rarityArr) ? 1 : 0.7,
-                                    }
-                                }}
+                                sx={filteredObjectStyles(filterActive(filtered, filterRarity.rarityArr))}
                                 onClick={() => {
                                     filterActive(filtered, filterRarity.rarityArr) ? removeFromFilter(filtered, filterRarity.setRarityArr) : addToFilter(filtered, filterRarity.setRarityArr)
                                 }}

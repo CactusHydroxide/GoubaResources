@@ -1,9 +1,9 @@
-import { Box, Group, Image, Stack, Text, useMantineTheme } from "@mantine/core"
+import { Box, Group, Image, Skeleton, Stack, Text, useMantineTheme } from "@mantine/core"
 import { IconHeart, IconShield, IconSword } from "@tabler/icons-react"
 import PathTypeImage from "./PathTypeImage"
 import { LightConeOverview } from "../definition"
 import { FC } from "react"
-import { useMediaQuery } from "@mantine/hooks"
+import { useDisclosure, useMediaQuery } from "@mantine/hooks"
 import { useNavigate } from "react-router-dom"
 import { rarityGradients } from "../utils/RarityGradient"
 
@@ -12,6 +12,7 @@ interface LightConeTableRowProp {
 }
 
 const LightConeTableRow: FC<LightConeTableRowProp> = ({ lightCone }) => {
+    const [isImageLoaded, handleIsImageLoaded] = useDisclosure(false)
     const navigate = useNavigate()
     const theme = useMantineTheme()
     const maxMedium = useMediaQuery(`(max-width: ${theme.breakpoints.md})`);
@@ -39,21 +40,24 @@ const LightConeTableRow: FC<LightConeTableRowProp> = ({ lightCone }) => {
         <tr style={{ cursor: 'pointer', fontWeight: 600 }} onClick={() => { navigate(lightCone.name) }}>
             <td>
                 <Box maw={maxMedium ? '75px' : 'auto'} pt='sm' pb='sm' >
-                    <Image
-                        src={lightCone.imageUrl}
-                        fit="contain" height={maxMedium ? 'auto' : 80}
-                        width={maxMedium ? 75 : 'auto'} caption={lightCone.name}
-                        sx={{
-                            '.mantine-Image-image': {
-                                backgroundImage: theme.fn.gradient(rarityGradients[lightCone.rarity]),
-                                padding: '5px',
-                                border: '1px solid',
-                                borderColor: theme.colors.dark[3],
-                                borderRadius: theme.spacing.sm,
-                                margin: 'auto'
-                            }
-                        }}
-                    />
+                    <Skeleton visible={!isImageLoaded}>
+                        <Image
+                            onLoad={() => handleIsImageLoaded.open()}
+                            src={lightCone.imageUrl}
+                            fit="contain" height={maxMedium ? 'auto' : 80}
+                            width={maxMedium ? 75 : 'auto'} caption={lightCone.name}
+                            sx={{
+                                '.mantine-Image-image': {
+                                    backgroundImage: theme.fn.gradient(rarityGradients[lightCone.rarity]),
+                                    padding: '5px',
+                                    border: '1px solid',
+                                    borderColor: theme.colors.dark[3],
+                                    borderRadius: theme.spacing.sm,
+                                    margin: 'auto'
+                                }
+                            }}
+                        />
+                    </Skeleton>
                 </Box>
             </td>
             <td><Group spacing='xs' noWrap miw={100} maw={'20vw'} align="left">

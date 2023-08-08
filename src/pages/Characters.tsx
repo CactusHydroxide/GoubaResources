@@ -100,7 +100,7 @@ const Characters = () => {
             ]}>
                 {filteredCharArr(apiCharacterData).map((character) => {
                     return (
-                        <CharacterCard character={character} />
+                        <CharacterCard character={character} key={character.name} />
                     )
                 })}
             </SimpleGrid>

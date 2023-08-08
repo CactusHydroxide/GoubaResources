@@ -136,7 +136,7 @@ const LightCones = () => {
                     </tr>
                 </thead>
                 <tbody>
-                    {filterLightCones(apiLightConeData).map((lightCone) => <LightConeTableRow lightCone={lightCone} />)}
+                    {filterLightCones(apiLightConeData).map((lightCone) => <LightConeTableRow lightCone={lightCone} key={lightCone.name} />)}
                 </tbody>
             </Table >
         </>

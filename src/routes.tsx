@@ -17,7 +17,7 @@ const PageRoutes = () => {
                 <Route path=":id" element={<Character />} />
             </Route>
             <Route path="/LightCones">
-                <Route index element={<LightCones />} />
+            html image complete react    <Route index element={<LightCones />} />
                 <Route path=":id" element={<LightCone />} />
             </Route>
             <Route path="/Wishes" element={<Wishes />} />

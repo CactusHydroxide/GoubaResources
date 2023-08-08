@@ -1,9 +1,10 @@
 import { AppShell, useMantineTheme } from "@mantine/core"
-import { useState } from "react"
+import { Suspense, useState } from "react"
 import LayoutNavbar from "./LayoutNavbar";
 import LayoutHeader from "./LayoutHeader";
 import PageRoutes from "../../routes";
 import LayoutPageContainer from "./LayoutPageContainer";
+import LoadingSkeleton from "../../pages/LoadingSkeleton";
 
 
 const Layout = () => {
@@ -25,7 +26,9 @@ const Layout = () => {
         }
     >
         <LayoutPageContainer>
-            <PageRoutes />
+            <Suspense fallback={<LoadingSkeleton />}>
+                <PageRoutes />
+            </Suspense>
         </LayoutPageContainer>
     </AppShell>)
 }

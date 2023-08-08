@@ -1,10 +1,10 @@
-import { AspectRatio, Box, Card, Image, Text, useMantineTheme } from "@mantine/core"
+import { AspectRatio, Box, Card, Image, Skeleton, Text, useMantineTheme } from "@mantine/core"
 import { CharacterOverview } from "../definition";
 import { FC } from "react";
 import { rarityGradients } from "../utils/RarityGradient";
 import { useNavigate } from "react-router-dom";
 import PathTypeImage from "./PathTypeImage";
-import { useMediaQuery } from "@mantine/hooks";
+import { useDisclosure, useMediaQuery } from "@mantine/hooks";
 
 interface CharacterCardProps {
     character: CharacterOverview
@@ -14,6 +14,7 @@ const CharacterCard: FC<CharacterCardProps> = ({ character }) => {
     const theme = useMantineTheme();
     const navigate = useNavigate()
     const isSmall = useMediaQuery(`(min-width: ${theme.breakpoints.sm})`);
+    const [imageLoaded, imageLoadedHandler] = useDisclosure(false)
     const { name, imageUrl, dmgType, path, rarity } = character
 
     return (
@@ -32,14 +33,17 @@ const CharacterCard: FC<CharacterCardProps> = ({ character }) => {
             }}>
             <Box pos='relative' >
                 <AspectRatio ratio={1 / 1} >
-                    <Image
-                        src={!!imageUrl ? imageUrl : `https://cataas.com/c/s/${name}?wi=250&he=250`}
-                        style={{ backgroundImage: theme.fn.gradient(rarityGradients[rarity]) }}
-                        alt={name}
-                        imageProps={
-                            { loading: 'lazy', alt: name }
-                        }
-                    />
+                    <Skeleton visible={!imageLoaded}>
+                        <Image
+                            onLoad={() => imageLoadedHandler.open()}
+                            src={!!imageUrl ? imageUrl : `https://cataas.com/c/s/${name}?wi=250&he=250`}
+                            style={{ backgroundImage: theme.fn.gradient(rarityGradients[rarity]) }}
+                            alt={name}
+                            imageProps={
+                                { loading: 'lazy', alt: name }
+                            }
+                        />
+                    </Skeleton>
                 </AspectRatio>
                 <Box sx={{ position: 'absolute', right: '10px', bottom: '5px', width: isSmall ? '30px' : '24px', height: isSmall ? '30px' : '24px', borderRadius: '50%', padding: '2px' }} bg={'#262626'}>
                     <PathTypeImage icon={path} />

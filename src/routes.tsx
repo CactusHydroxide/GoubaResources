@@ -1,11 +1,13 @@
 import { Route, Routes } from "react-router-dom"
-import PageNotFound from "./pages/PageNotFound"
-import Dashboard from "./pages/Dashboard"
-import Characters from "./pages/Characters"
-import Character from "./pages/Character"
-import Wishes from "./pages/Wishes"
-import LightCones from "./pages/LightCones"
-import LightCone from "./pages/LightCone"
+import { lazy } from "react"
+
+const Dashboard = lazy(() => import('./pages/Dashboard'))
+const PageNotFound = lazy(() => import('./pages/PageNotFound'))
+const Characters = lazy(() => import('./pages/Characters'))
+const Character = lazy(() => import('./pages/Character'))
+const Wishes = lazy(() => import('./pages/Wishes'))
+const LightCones = lazy(() => import('./pages/LightCones'))
+const LightCone = lazy(() => import('./pages/LightCone'))
 
 const PageRoutes = () => {
     return (
@@ -15,7 +17,7 @@ const PageRoutes = () => {
                 <Route path=":id" element={<Character />} />
             </Route>
             <Route path="/LightCones">
-                <Route index element={<LightCones />} />
+            html image complete react    <Route index element={<LightCones />} />
                 <Route path=":id" element={<LightCone />} />
             </Route>
             <Route path="/Wishes" element={<Wishes />} />

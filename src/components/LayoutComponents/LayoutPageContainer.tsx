@@ -3,7 +3,7 @@ import { FC, ReactNode } from "react";
 
 const LayoutPageContainer: FC<{ children: ReactNode }> = ({ children }) => {
     return (
-        <Box maw={1280} m={{ base: 'auto', lg: 0 }} >
+        <Box maw={1280} m={{ base: 'auto', lg: 0 }}>
             {children}
         </Box>
     )

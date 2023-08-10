@@ -1,8 +1,8 @@
 import { Badge, Button, CSSObject, Collapse, Group, TextInput, UnstyledButton, useMantineTheme } from "@mantine/core"
 import PathTypeImage from "./PathTypeImage"
-import { HSR_DmgType, HSR_Paths, HSR_Rarity } from "../definition"
+import { HSR_DmgType, HSR_Paths, HSR_Rarity, HSR_RelicType } from "../definition"
 import { useDisclosure } from "@mantine/hooks"
-import { IconChevronDown, IconSearch } from "@tabler/icons-react"
+import { IconChevronDown, IconPlanet, IconSearch, IconShirt } from "@tabler/icons-react"
 import { FC, Dispatch, SetStateAction } from "react"
 import { rarityGradients } from "../utils/RarityGradient"
 
@@ -23,15 +23,20 @@ interface SearchPathTypeFilterProps {
         rarityArr: HSR_Rarity[],
         setRarityArr: Dispatch<SetStateAction<HSR_Rarity[]>>,
         excluding?: HSR_Rarity[]
+    },
+    filterRelic?: {
+        relicTypeArr: HSR_RelicType[]
+        setRelicTypeArr: Dispatch<SetStateAction<HSR_RelicType[]>>,
     }
 }
 
 export const allDmgTypeArr: HSR_DmgType[] = ['Physical', 'Fire', 'Ice', 'Lightning', 'Wind', 'Quantum', 'Imaginary',]
 export const allPathsArr: HSR_Paths[] = ['Destruction', 'Hunt', 'Erudition', 'Harmony', 'Nihility', 'Preservation', 'Abundance']
 export const allRarityArr: HSR_Rarity[] = ['two', 'three', 'four', 'five']
+export const allRelicType: HSR_RelicType[] = ['cavern', 'planar']
 
 
-const SearchPathTypeFilter: FC<SearchPathTypeFilterProps> = ({ search, filterDmgType, filterPaths, filterRarity }) => {
+const SearchPathTypeFilter: FC<SearchPathTypeFilterProps> = ({ search, filterDmgType, filterPaths, filterRarity, filterRelic }) => {
     const theme = useMantineTheme();
     const [opened, { toggle }] = useDisclosure(false);
 
@@ -96,10 +101,11 @@ const SearchPathTypeFilter: FC<SearchPathTypeFilterProps> = ({ search, filterDmg
                 <Group spacing='sm' mb='sm'>
                     {!!filterDmgType && <Group spacing={'xs'}
                         miw={300}
+                        position='center'
                         noWrap
-                        sx={{
+                        sx={
                             filterContainerStyles
-                        }}
+                        }
                     >
                         {allDmgTypeArr.map((filtered) =>
                             <UnstyledButton
@@ -114,10 +120,11 @@ const SearchPathTypeFilter: FC<SearchPathTypeFilterProps> = ({ search, filterDmg
                     </Group>}
                     {!!filterPaths && <Group spacing={'xs'}
                         miw={300}
+                        position='center'
                         noWrap
-                        sx={{
+                        sx={
                             filterContainerStyles
-                        }}
+                        }
                     >
                         {allPathsArr.map((filtered) =>
                             <UnstyledButton
@@ -131,16 +138,36 @@ const SearchPathTypeFilter: FC<SearchPathTypeFilterProps> = ({ search, filterDmg
                             </UnstyledButton>
                         )}
                     </Group>}
-                    {!!filterRarity && <Group spacing={'xs'}
-                        // miw={300}
+                    {!!filterRelic && <Group spacing={'xs'}
+                        miw={100}
+                        position='center'
                         noWrap
-                        sx={{
+                        sx={
                             filterContainerStyles
-                        }}
+                        }
+                    >
+                        {allRelicType.map((filtered) =>
+                            <UnstyledButton
+                                key={`filter_${filtered}`}
+                                sx={filteredObjectStyles(filterActive(filtered, filterRelic.relicTypeArr))}
+                                onClick={() => {
+                                    filterActive(filtered, filterRelic.relicTypeArr) ? removeFromFilter(filtered, filterRelic.setRelicTypeArr) : addToFilter(filtered, filterRelic.setRelicTypeArr)
+                                }}
+                            >
+                                {filtered === 'cavern' ? <IconShirt width={'100%'} /> : <IconPlanet />}
+                            </UnstyledButton>
+                        )}
+                    </Group>}
+                    {!!filterRarity && <Group spacing={'xs'}
+                        noWrap
+                        sx={
+                            filterContainerStyles
+                        }
                     >
                         {allRarityArr.map((filtered) =>
                             (!filterRarity.excluding?.includes(filtered)) && <UnstyledButton
                                 key={`filter_${filtered}`}
+                                miw={80}
                                 sx={filteredObjectStyles(filterActive(filtered, filterRarity.rarityArr))}
                                 onClick={() => {
                                     filterActive(filtered, filterRarity.rarityArr) ? removeFromFilter(filtered, filterRarity.setRarityArr) : addToFilter(filtered, filterRarity.setRarityArr)

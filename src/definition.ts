@@ -1,6 +1,7 @@
 export type HSR_Paths = 'Destruction' | 'Hunt' | 'Erudition' | 'Harmony' | 'Nihility' | 'Preservation' | 'Abundance';
 export type HSR_DmgType = 'Physical' | 'Fire' | 'Ice' | 'Lightning' | 'Wind' | 'Quantum' | 'Imaginary';
 export type HSR_Rarity = 'two' | 'three' | 'four' | 'five'
+export type HSR_RelicType = 'planar' | 'cavern'
 
 export interface CharacterOverview {
     name: string
@@ -31,6 +32,7 @@ export interface LightConeOverview {
 interface RelicGeneric {
     name: string,
     recommended: CharacterOverview[]
+    type: HSR_RelicType,
     location: string
 }
 

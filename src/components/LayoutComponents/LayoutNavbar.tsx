@@ -1,6 +1,6 @@
 import { Box, Navbar } from "@mantine/core"
 import { FC } from "react"
-import { IconCards, IconHome, IconTicket, IconUserCircle } from '@tabler/icons-react';
+import { IconCards, IconHome, IconShirt, IconTicket, IconUserCircle } from '@tabler/icons-react';
 import NavButton, { NavButtonProps } from "../NavButton";
 
 interface LayoutNavbarProps {
@@ -25,9 +25,15 @@ const LayoutNavbar: FC<LayoutNavbarProps> = ({ navOpened }) => {
             icon: <IconCards size='24px' />
         },
         {
+            label: 'Relics',
+            targetUrl: '/Relics',
+            icon: <IconShirt size='24px' />
+        },
+        {
             label: 'Wishes',
             targetUrl: '/Wishes',
-            icon: <IconTicket size='24px' />
+            icon: <IconTicket size='24px' />,
+            disabled: true
         },
     ]
     return (
@@ -39,6 +45,7 @@ const LayoutNavbar: FC<LayoutNavbarProps> = ({ navOpened }) => {
                         label={navButtonProps.label}
                         targetUrl={navButtonProps.targetUrl}
                         icon={navButtonProps.icon}
+                        disabled={navButtonProps.disabled}
                     />
                 )}
             </nav>

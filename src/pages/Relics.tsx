@@ -1,5 +1,8 @@
-import { Stack, Table, Title, Text } from "@mantine/core"
-import { CharacterOverview, RelicData } from "../definition"
+import { Stack, Table, Title, Text, Box, useMantineTheme } from "@mantine/core"
+import { HSR_RelicType, RelicData } from "../definition"
+import { useState } from "react"
+import SearchPathTypeFilter from "../components/SearchPathTypeFilter"
+import RelicTableRow from "../components/RelicTableRow"
 
 
 const apiRelicData: RelicData[] = [
@@ -41,38 +44,46 @@ const apiRelicData: RelicData[] = [
 ]
 
 const Relics = () => {
-    let relic = apiRelicData[0]
+    const theme = useMantineTheme()
+
+    const [relicTypeArr, setRelicTypeArr] = useState<HSR_RelicType[]>([])
+    const [searchStr, setSearchStr] = useState<string>('')
+    const filteredRelicArr = (relicList: RelicData[]): RelicData[] => {
+        let filteredRelicList: RelicData[] = relicList
+
+        if (relicTypeArr.length > 0) {
+            filteredRelicList = filteredRelicList.filter((relic) => relicTypeArr.includes(relic.type))
+
+        }
+        if (searchStr.length > 0) {
+            filteredRelicList = filteredRelicList.filter((relic) => (relic.name.toLocaleLowerCase().search(searchStr.toLowerCase())) != -1)
+        }
+
+        return filteredRelicList
+    }
     return (
         <>
             <Title>Relics</Title>
-            <Table>
-                <tr>
-                    <th rowSpan={2}>Relic Set</th>
+            <SearchPathTypeFilter filterRelic={{ relicTypeArr, setRelicTypeArr }} search={{ searchStr, setSearchStr }} />
+            <Table sx={{
+                fontWeight: 600,
+                textAlign: 'left',
+                'span': {
+                    color: theme.colors.dark[1]
+                },
+                'td, th': {
+                    padding: '5px'
+                }
+            }}>
+                <thead>
+                    <th colSpan={2}>Relic Set</th>
                     <th>Set Bonus</th>
                     <th>Location</th>
-                    <th>Recommended Characters</th>
-                </tr>
-                <tr>
-                    <td>image</td>
-                    <td>{relic.name}</td>
-                    <td>
-                        <Stack spacing='xs'>
-                            <Text>
-                                <span>2 Piece: </span>
-                                {relic.setBonus.two}
-                            </Text>
-                            {relic.type === 'cavern' &&
-                                <>
-                                    <hr />
-                                    <Text>
-                                        <span>4 Piece: </span>
-                                        {relic.setBonus.four}
-                                    </Text>
-                                </>
-                            }
-                        </Stack>
-                    </td>
-                </tr>
+                    <th>Recommended Users</th>
+                </thead>
+                {filteredRelicArr(apiRelicData).map((relic) =>
+                    <RelicTableRow relic={relic} />
+                )}
             </Table >
         </>
     )

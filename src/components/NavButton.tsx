@@ -6,14 +6,17 @@ export interface NavButtonProps {
     label: string,
     targetUrl: string,
     icon: ReactNode
+    disabled?: boolean
 }
 
-const NavButton: FC<NavButtonProps> = ({ label, targetUrl, icon }) => {
+const NavButton: FC<NavButtonProps> = ({ label, targetUrl, icon, disabled }) => {
     const navigate = useNavigate()
     const location = useLocation()
     const isActive = location.pathname == targetUrl
+    console.log(label, disabled)
     return (
         <Button onClick={() => { navigate(targetUrl) }}
+            disabled={disabled}
             styles={(theme) => ({
                 root: {
                     height: 'auto',
@@ -24,7 +27,8 @@ const NavButton: FC<NavButtonProps> = ({ label, targetUrl, icon }) => {
                     color: theme.colors.dark[0],
                     '&:hover': {
                         backgroundColor: isActive ? theme.colors.dark[4] : theme.colors.dark[6]
-                    }
+                    },
+                    '&:disabled': { backgroundColor: theme.colors.dark[7], color: theme.colors.dark[3] }
                 },
                 label: {
                     width: '100%',
@@ -40,7 +44,8 @@ const NavButton: FC<NavButtonProps> = ({ label, targetUrl, icon }) => {
                 </ThemeIcon>
                 <Text>{label}</Text>
             </Group>
-        </Button>)
+        </Button>
+    )
 }
 
 export default NavButton

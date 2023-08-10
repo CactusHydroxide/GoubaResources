@@ -8,6 +8,7 @@ const Character = lazy(() => import('./pages/Character'))
 const Wishes = lazy(() => import('./pages/Wishes'))
 const LightCones = lazy(() => import('./pages/LightCones'))
 const LightCone = lazy(() => import('./pages/LightCone'))
+const Relics = lazy(() => import('./pages/Relics'))
 
 const PageRoutes = () => {
     return (
@@ -17,10 +18,11 @@ const PageRoutes = () => {
                 <Route path=":id" element={<Character />} />
             </Route>
             <Route path="/LightCones">
-            html image complete react    <Route index element={<LightCones />} />
+                <Route index element={<LightCones />} />
                 <Route path=":id" element={<LightCone />} />
             </Route>
             <Route path="/Wishes" element={<Wishes />} />
+            <Route path='/Relics' element={<Relics />} />
             <Route path="/" element={<Dashboard />} />
             <Route path="*" element={<PageNotFound />} />
         </Routes>

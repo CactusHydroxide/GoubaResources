@@ -27,3 +27,36 @@ export interface LightConeOverview {
     atk: { min: number, max: number }
     imageUrl?: string
 }
+
+interface RelicGeneric {
+    name: string,
+    recommended: CharacterOverview[]
+    location: string
+}
+
+interface RelicData_TwoPiece extends RelicGeneric {
+    type: 'planar'
+    imageUrl: {
+        orb?: string
+        rope?: string
+    }
+    setBonus: {
+        two: string
+    }
+}
+
+interface RelicData_FourPiece extends RelicGeneric {
+    type: 'cavern'
+    imageUrl: {
+        head?: string
+        hands?: string
+        chest?: string
+        boots?: string
+    }
+    setBonus: {
+        two: string
+        four: string
+    }
+}
+
+export type RelicData = RelicData_TwoPiece | RelicData_FourPiece 

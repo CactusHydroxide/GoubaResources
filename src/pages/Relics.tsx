@@ -1,4 +1,4 @@
-import { Stack, Table, Title, Text, Box, useMantineTheme } from "@mantine/core"
+import { Table, Title, useMantineTheme } from "@mantine/core"
 import { HSR_RelicType, RelicData } from "../definition"
 import { useState } from "react"
 import SearchPathTypeFilter from "../components/SearchPathTypeFilter"
@@ -65,7 +65,8 @@ const Relics = () => {
         <>
             <Title>Relics</Title>
             <SearchPathTypeFilter filterRelic={{ relicTypeArr, setRelicTypeArr }} search={{ searchStr, setSearchStr }} />
-            <Table sx={{
+            <Table
+            sx={{
                 fontWeight: 600,
                 textAlign: 'left',
                 'span': {
@@ -76,14 +77,18 @@ const Relics = () => {
                 }
             }}>
                 <thead>
-                    <th colSpan={2}>Relic Set</th>
-                    <th>Set Bonus</th>
-                    <th>Location</th>
-                    <th>Recommended Users</th>
+                   <tr>
+                     <th colSpan={2}>Relic Set</th>
+                     <th>Set Bonus</th>
+                     <th>Location</th>
+                     <th>Recommended Users</th>
+                   </tr>
                 </thead>
-                {filteredRelicArr(apiRelicData).map((relic) =>
-                    <RelicTableRow relic={relic} />
-                )}
+                <tbody>
+                    {filteredRelicArr(apiRelicData).map((relic) =>
+                        <RelicTableRow relic={relic} />
+                    )}
+                </tbody>
             </Table >
         </>
     )

@@ -13,22 +13,26 @@ const LayoutNavbar: FC<LayoutNavbarProps> = ({ navOpened, setNavOpened }) => {
         {
             label: 'Home',
             targetUrl: '/',
-            icon: <IconHome size='24px' />
+            icon: <IconHome size='24px' />,
+            setNavOpened: setNavOpened
         },
         {
             label: 'Characters',
             targetUrl: '/Characters',
-            icon: <IconUserCircle size='24px' />
+            icon: <IconUserCircle size='24px' />,
+            setNavOpened: setNavOpened
         },
         {
             label: 'Light Cones',
             targetUrl: '/LightCones',
-            icon: <IconCards size='24px' />
+            icon: <IconCards size='24px' />,
+            setNavOpened: setNavOpened
         },
         {
             label: 'Wishes',
             targetUrl: '/Wishes',
-            icon: <IconTicket size='24px' />
+            icon: <IconTicket size='24px' />,
+            setNavOpened: setNavOpened
         },
     ]
     return (

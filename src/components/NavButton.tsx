@@ -6,7 +6,7 @@ export interface NavButtonProps {
     label: string,
     targetUrl: string,
     icon: ReactNode
-    setNavOpened?: React.Dispatch<React.SetStateAction<boolean>>
+    setNavOpened: React.Dispatch<React.SetStateAction<boolean>>
 }
 
 const NavButton: FC<NavButtonProps> = ({ label, targetUrl, icon, setNavOpened }) => {
@@ -16,7 +16,7 @@ const NavButton: FC<NavButtonProps> = ({ label, targetUrl, icon, setNavOpened })
     return (
         <Button onClick={() => { 
             navigate(targetUrl)
-            setNavOpened && setNavOpened(false)
+            setNavOpened(false)
         }}
             styles={(theme) => ({
                 root: {

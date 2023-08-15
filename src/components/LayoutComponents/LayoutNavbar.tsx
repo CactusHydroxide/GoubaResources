@@ -8,31 +8,29 @@ interface LayoutNavbarProps {
     setNavOpened: React.Dispatch<React.SetStateAction<boolean>>
 }
 
+type navListType = Omit<NavButtonProps, 'setNavOpened'>
+
 const LayoutNavbar: FC<LayoutNavbarProps> = ({ navOpened, setNavOpened }) => {
-    const navList: NavButtonProps[] = [
+    const navList: navListType[] = [
         {
             label: 'Home',
             targetUrl: '/',
-            icon: <IconHome size='24px' />,
-            setNavOpened: setNavOpened
+            icon: <IconHome size='24px' />
         },
         {
             label: 'Characters',
             targetUrl: '/Characters',
-            icon: <IconUserCircle size='24px' />,
-            setNavOpened: setNavOpened
+            icon: <IconUserCircle size='24px' />
         },
         {
             label: 'Light Cones',
             targetUrl: '/LightCones',
-            icon: <IconCards size='24px' />,
-            setNavOpened: setNavOpened
+            icon: <IconCards size='24px' />
         },
         {
             label: 'Wishes',
             targetUrl: '/Wishes',
-            icon: <IconTicket size='24px' />,
-            setNavOpened: setNavOpened
+            icon: <IconTicket size='24px' />
         },
     ]
     return (

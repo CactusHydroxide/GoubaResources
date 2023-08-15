@@ -6,14 +6,18 @@ export interface NavButtonProps {
     label: string,
     targetUrl: string,
     icon: ReactNode
+    setNavOpened: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-const NavButton: FC<NavButtonProps> = ({ label, targetUrl, icon }) => {
+const NavButton: FC<NavButtonProps> = ({ label, targetUrl, icon, setNavOpened }) => {
     const navigate = useNavigate()
     const location = useLocation()
     const isActive = location.pathname == targetUrl
     return (
-        <Button onClick={() => { navigate(targetUrl) }}
+        <Button onClick={() => { 
+            navigate(targetUrl)
+            setNavOpened(false)
+        }}
             styles={(theme) => ({
                 root: {
                     height: 'auto',

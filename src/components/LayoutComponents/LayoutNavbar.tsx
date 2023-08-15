@@ -5,10 +5,13 @@ import NavButton, { NavButtonProps } from "../NavButton";
 
 interface LayoutNavbarProps {
     navOpened: boolean
+    setNavOpened: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-const LayoutNavbar: FC<LayoutNavbarProps> = ({ navOpened }) => {
-    const navList: NavButtonProps[] = [
+type navListType = Omit<NavButtonProps, 'setNavOpened'>
+
+const LayoutNavbar: FC<LayoutNavbarProps> = ({ navOpened, setNavOpened }) => {
+    const navList: navListType[] = [
         {
             label: 'Home',
             targetUrl: '/',
@@ -39,6 +42,7 @@ const LayoutNavbar: FC<LayoutNavbarProps> = ({ navOpened }) => {
                         label={navButtonProps.label}
                         targetUrl={navButtonProps.targetUrl}
                         icon={navButtonProps.icon}
+                        setNavOpened={setNavOpened}
                     />
                 )}
             </nav>

@@ -19,7 +19,7 @@ const Layout = () => {
         }}
         navbarOffsetBreakpoint="sm"
         navbar={
-            <LayoutNavbar navOpened={navOpened} />
+            <LayoutNavbar navOpened={navOpened} setNavOpened={setNavOpened} />
         }
         header={
             <LayoutHeader navOpened={navOpened} setNavOpened={setNavOpened} />
